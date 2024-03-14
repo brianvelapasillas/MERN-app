@@ -36,5 +36,19 @@ const upload = multer({ storage });
 // All these config come from package instructions
 
 
+/* MONGOOSE SETUP*/
+const PORT = process.env.PORT || 6001; //port it goes if the other one doesn't work
+mongoose.connect(process.env.MONGO_URL, {     //connecting to database from node server
+    useNewUrlParse: true,
+    useUnifiedTopology: true,
+})
+. then(() => {
+    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+})
+.catch((error) => console.log(`${error} did not connect`));
+
+
+
+
 
 
