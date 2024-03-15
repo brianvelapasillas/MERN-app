@@ -44,9 +44,25 @@ export const register = async (req, res) => {  //async is a call to mongodb, api
     res.status(500).json({ error: err.message });   //2. Send back correct status. 
  }                                                  //3. Create json version of the saved user so front end can receive that response
 
-}  //register function
+};  //register function
 
+/* LOGGING IN */
+export const login = async (req, res) => {
+    try {
+        const { email, password} = req.body //getting email and password when user is trying to login
+        const user = await User.findOne({ email: email }); // use mongoose to try to find the one with specified email and bring back all user info to "user"
+        if (!user) return res.satus(400).json({msg: "User does not exist. "});
 
+        const isMatch = await  bcrypt.compare(password, user.password);             //determine if we match password
+        if (!isMatch) return res.satus(400).json({msg: "Invalid credentials. "});   //1. compare password sent, and user.password that is saved in database
+                                                                                    //both use same salt, compare they are the same hash
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET); //pass a secret string and go then add required info to the .env file
+        delete user.password; //delete password to prevent from being sent back to front end
+        res.status(200).json({ token, user });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
 
 
 

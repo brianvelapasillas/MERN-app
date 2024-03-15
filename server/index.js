@@ -8,6 +8,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";; //set the paths when we configure directories
+import authRoutes from "./routes/auth.js"; //paths and routes for every feature
 import { register } from "./controllers/auth.js"; //needed for line 40(register route)
 
 /*CONFIGURATIONS (functions that run in between diff things) */
@@ -38,8 +39,8 @@ const upload = multer({ storage });
 
 /* ROUTES WITH FILES */
 app.post("/auth/register", upload.single("picture"), register);    //if you wanna register, you will call this api from the frontend
-
-
+                                                                   //this one cannot be on a separate file beause needs the upload right above
+                                                                   //only when we need to upload a file, the other ones can be separate
 
 /* MONGOOSE SETUP*/
 const PORT = process.env.PORT || 6001; //port it goes if the other one doesn't work
@@ -53,6 +54,8 @@ mongoose.connect(process.env.MONGO_URL, {     //connecting to database from node
 .catch((error) => console.log(`${error} did not connect`));
 
 
+/* ROUTES */
+app.use("/auth, authRoutes");
 
 
 
