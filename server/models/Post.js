@@ -30,7 +30,7 @@ const postSchema = mongoose.Schema(
     { timestamps; true} //another object
 );
 
-const Post = mongoose.model("Post", postSchema);
+const Post = mongoose.model("Post", postSchema); //mongose template
 
 export default Post;
 
