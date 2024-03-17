@@ -26,7 +26,7 @@ export const createPost = async(res) => { //image getting passed through middlew
 }
 
 /* READ */
-export const getFeedPosts = async (req. res) => {   //grab all the posts of everyone
+export const getFeedPosts = async (req, res) => {   //grab all the posts of everyone
     try {
         const post = await Post.find();  //grabbing the news feed  
         res.status(200).json(post);
@@ -36,7 +36,7 @@ export const getFeedPosts = async (req. res) => {   //grab all the posts of ever
 }
 
 
-export const getUserPosts = async (req, res)
+export const getUserPosts = async (req, res);
 
 
 
